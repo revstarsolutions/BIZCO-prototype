@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/BIZCO-prototype/static/css/main.9599499e.css",
+    "main.js": "/BIZCO-prototype/static/js/main.faa7bc11.js",
+    "static/js/453.c284439c.chunk.js": "/BIZCO-prototype/static/js/453.c284439c.chunk.js",
+    "index.html": "/BIZCO-prototype/index.html",
+    "main.9599499e.css.map": "/BIZCO-prototype/static/css/main.9599499e.css.map",
+    "main.faa7bc11.js.map": "/BIZCO-prototype/static/js/main.faa7bc11.js.map",
+    "453.c284439c.chunk.js.map": "/BIZCO-prototype/static/js/453.c284439c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9599499e.css",
+    "static/js/main.faa7bc11.js"
+  ]
+}
