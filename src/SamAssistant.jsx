@@ -274,32 +274,22 @@ function SamAssistant({ isDarkMode }) {
         onTouchStart={handleMouseDown}
         onTouchEnd={handleMouseUp}
       >
-        <div className="human-eye blinking">
-          <div className="neural-network">
-            <div className="neuron n1"></div>
-            <div className="neuron n2"></div>
-            <div className="neuron n3"></div>
-            <div className="neuron n4"></div>
-            <div className="neuron n5"></div>
-            <div className="neuron n6"></div>
-            <div className="neuron n7"></div>
-            <div className="neuron n8"></div>
-            <div className="neuron n9"></div>
-            <div className="neuron n10"></div>
-            <div className="connection c1"></div>
-            <div className="connection c2"></div>
-            <div className="connection c3"></div>
-            <div className="connection c4"></div>
-            <div className="connection c5"></div>
-            <div className="connection c6"></div>
-          </div>
-          <div className="eye-inner">
-            <div className="iris">
-              <div className="pupil"></div>
-              <div className="highlight"></div>
-            </div>
-          </div>
+        <div className="neural-network">
+          {/* Neurons */}
+          {[...Array(8)].map((_, i) => (
+            <div className="neuron" key={`neuron-${i}`} style={{
+              top: `${25 + 20 * Math.cos(2 * Math.PI * i / 8)}px`,
+              left: `${25 + 20 * Math.sin(2 * Math.PI * i / 8)}px`
+            }}></div>
+          ))}
+          
+          {/* Connections */}
+          <div className="connection" style={{top: '20px', left: '25px', width: '15px', height: '1px', transform: 'rotate(45deg)'}}></div>
+          <div className="connection" style={{top: '30px', left: '35px', width: '12px', height: '1px', transform: 'rotate(-30deg)'}}></div>
+          <div className="connection" style={{top: '40px', left: '20px', width: '18px', height: '1px', transform: 'rotate(60deg)'}}></div>
+          <div className="connection" style={{top: '15px', left: '40px', width: '14px', height: '1px', transform: 'rotate(-45deg)'}}></div>
         </div>
+        <div className="central-eye"></div>
       </button>
     </div>
   );
