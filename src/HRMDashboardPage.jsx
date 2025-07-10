@@ -568,14 +568,14 @@ const HRMDashboardPage = ({ onGoBackToCRM, isDarkMode }) => {
               <div className={clsx("p-6 rounded-lg shadow-md flex flex-col items-center", {'bg-white':!isDarkMode, 'bg-[#2C2C2C]':isDarkMode})}>
                 <h2 className={clsx("text-lg font-semibold mb-4", {'text-gray-800':!isDarkMode, 'text-gray-200':isDarkMode})}>Employee Distribution by Sub Unit</h2>
                 <div className={clsx("w-48 h-48 rounded-full flex items-center justify-center text-white text-4xl font-bold", {
-                  'bg-gradient-to-br from-[#3B5998] via-[#6B8ECB] to-gray-400': !isDarkMode,
+                  'bg-gradient-to-br from-[#3B5998] via-[#2563eb] to-[#1e40af]': !isDarkMode,
                   'bg-gradient-to-br from-gray-500 via-gray-600 to-gray-700': isDarkMode,
                 })}>
                   <PieChart size={64} color="white"/>
                 </div>
                 <div className={clsx("mt-4 text-sm", {'text-gray-700':!isDarkMode, 'text-gray-300':isDarkMode})}>
                   <p><span className={clsx("inline-block w-3 h-3 rounded-full mr-2", {'bg-[#3B5998]':!isDarkMode, 'bg-gray-500':isDarkMode})}></span> HR: 15%</p>
-                  <p><span className={clsx("inline-block w-3 h-3 rounded-full mr-2", {'bg-[#6B8ECB]':!isDarkMode, 'bg-gray-600':isDarkMode})}></span> Marketing: 25%</p>
+                  <p><span className={clsx("inline-block w-3 h-3 rounded-full mr-2", {'bg-[#2563eb]':!isDarkMode, 'bg-gray-600':isDarkMode})}></span> Marketing: 25%</p>
                   <p><span className={clsx("inline-block w-3 h-3 rounded-full mr-2", {'bg-gray-400':!isDarkMode, 'bg-gray-700':isDarkMode})}></span> Sales: 60%</p>
                 </div>
                 <p className={clsx("text-center text-sm mt-2", {'text-gray-500':!isDarkMode, 'text-gray-400':isDarkMode})}>Placeholder Pie Chart</p>
@@ -584,7 +584,7 @@ const HRMDashboardPage = ({ onGoBackToCRM, isDarkMode }) => {
               <div className={clsx("p-6 rounded-lg shadow-md flex flex-col items-center", {'bg-white':!isDarkMode, 'bg-[#2C2C2C]':isDarkMode})}>
                 <h2 className={clsx("text-lg font-semibold mb-4", {'text-gray-800':!isDarkMode, 'text-gray-200':isDarkMode})}>Employee Distribution by Location</h2>
                 <div className={clsx("w-48 h-48 rounded-full flex items-center justify-center text-white text-4xl font-bold", {
-                  'bg-gradient-to-br from-[#1A2C5B] via-[#3B5998] to-[#6B8ECB]': !isDarkMode,
+                  'bg-gradient-to-br from-[#1A2C5B] via-[#3B5998] to-[#2563eb]': !isDarkMode,
                   'bg-gradient-to-br from-gray-900 via-gray-700 to-gray-500': isDarkMode,
                 })}>
                   <MapPin size={64} color="white"/>
@@ -592,7 +592,7 @@ const HRMDashboardPage = ({ onGoBackToCRM, isDarkMode }) => {
                 <div className={clsx("mt-4 text-sm", {'text-gray-700':!isDarkMode, 'text-gray-300':isDarkMode})}>
                   <p><span className={clsx("inline-block w-3 h-3 rounded-full mr-2", {'bg-[#1A2C5B]':!isDarkMode, 'bg-gray-900':isDarkMode})}></span> Office A: 40%</p>
                   <p><span className={clsx("inline-block w-3 h-3 rounded-full mr-2", {'bg-[#3B5998]':!isDarkMode, 'bg-gray-700':isDarkMode})}></span> Office B: 30%</p>
-                  <p><span className={clsx("inline-block w-3 h-3 rounded-full mr-2", {'bg-[#6B8ECB]':!isDarkMode, 'bg-gray-500':isDarkMode})}></span> Remote: 30%</p>
+                  <p><span className={clsx("inline-block w-3 h-3 rounded-full mr-2", {'bg-[#2563eb]':!isDarkMode, 'bg-gray-500':isDarkMode})}></span> Remote: 30%</p>
                 </div>
                 <p className={clsx("text-center text-sm mt-2", {'text-gray-500':!isDarkMode, 'text-gray-400':isDarkMode})}>Placeholder Pie Chart</p>
               </div>
