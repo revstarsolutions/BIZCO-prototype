@@ -1,1115 +1,363 @@
-/* AI Assistant */
-.ai-assistant {
-    position: fixed;
-    z-index: 1000;
-    user-select: none;
-    transition: all 0.3s ease-in-out; /* Smoother transition for snapping */
+/* Sam Assistant Styles */
+.sam-assistant {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
 }
 
-/* Default position for bottom-right */
-.ai-assistant.bottom-right {
-    bottom: 30px;
-    right: 30px;
-    top: auto;
-    left: auto;
+/* Sam Button */
+.sam-button {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3B5998 0%, #1e40af 100%);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(59, 89, 152, 0.4);
+  position: relative;
 }
 
-/* Top-left position */
-.ai-assistant.top-left {
-    top: 30px;
-    left: 30px;
-    bottom: auto;
-    right: auto;
+.sam-button.recording {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
 }
 
-/* Top-right position */
-.ai-assistant.top-right {
-    top: 30px;
-    right: 30px;
-    bottom: auto;
-    left: auto;
+/* Recording Status Box */
+.recording-status {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 15px;
+  min-width: 250px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Bottom-left position */
-.ai-assistant.bottom-left {
-    bottom: 30px;
-    left: 30px;
-    top: auto;
-    right: auto;
+.recording-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.assistant-button {
-    width: 80px;
-    height: 80px;
-    /* Adjusted to match HRM primary color scheme */
-    background: linear-gradient(135deg, #3B5998 0%, #1A2C5B 100%);
-    border-radius: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    cursor: pointer;
-    /* Adjusted shadow to match HRM style */
-    box-shadow: 0 8px 25px rgba(59, 89, 152, 0.4);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    border: 3px solid rgba(255, 255, 255, 0.2);
+.recording-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
 }
 
-.assistant-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
-    transform: translateX(-100%);
-    transition: transform 0.6s;
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: #ff6b6b;
+  border-radius: 50%;
+  animation: pulse-dot 1s infinite;
 }
 
-.assistant-button:hover::before {
-    transform: translateX(100%);
-}
-
-.assistant-button:hover {
-    transform: scale(1.1);
-    /* Adjusted shadow to match HRM style */
-    box-shadow: 0 12px 35px rgba(59, 89, 152, 0.6);
-}
-
-.assistant-button.recording {
-    animation: pulse 1.5s infinite;
-    /* Retained original recording color for visual distinction */
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-}
-
-.assistant-button.recording::before {
-    display: none;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-    100% { transform: scale(1); }
-}
-
-/* SAM Avatar Styling - Network Logo */
-.sam-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    /* Adjusted background and border to match HRM primary color */
-    background: radial-gradient(circle at center, rgba(232, 240, 255, 0.9) 0%, rgba(190, 208, 250, 0.9) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow:
-        0 4px 15px rgba(59, 89, 152, 0.3),
-        inset 0 1px 3px rgba(255, 255, 255, 0.8);
-    position: relative;
-    overflow: visible;
-    border: 2px solid rgba(59, 89, 152, 0.2);
-    backdrop-filter: blur(5px);
-}
-
-.sam-network-logo {
-    animation: logoFloat 4s ease-in-out infinite;
-    filter: drop-shadow(0 2px 4px rgba(59, 89, 152, 0.2));
-    transition: all 0.3s ease;
-}
-
-.sam-network-logo .network-connections line {
-    animation: networkPulse 3s ease-in-out infinite;
-    stroke-dasharray: 2, 4;
-    stroke-dashoffset: 0;
-    /* Adjusted stroke color to match HRM primary color */
-    stroke: #3B5998;
-}
-
-.sam-network-logo .network-connections line:nth-child(odd) {
-    animation: networkFlow 4s linear infinite;
-}
-
-.sam-network-logo .network-connections line:nth-child(even) {
-    animation: networkFlow 4s linear infinite reverse;
-    animation-delay: 0.5s;
-}
-
-.sam-network-logo .network-nodes circle {
-    animation: nodePulse 2.5s ease-in-out infinite;
-    transform-origin: center;
-    /* Adjusted fill color to match HRM primary color */
-    fill: #3B5998;
-}
-
-.sam-network-logo .network-nodes circle:nth-child(odd) {
-    animation-delay: 0.2s;
-}
-
-.sam-network-logo .network-nodes circle:nth-child(even) {
-    animation-delay: 0.8s;
-}
-
-.sam-network-logo .central-eye {
-    animation: eyeFloat 3s ease-in-out infinite;
-    transform-origin: center;
-}
-
-.sam-network-logo .central-eye ellipse:first-child {
-    animation: eyeBlink 5s ease-in-out infinite;
-    /* Adjusted stroke color to match HRM primary color */
-    stroke: #3B5998;
-}
-
-.sam-network-logo .central-eye circle:nth-child(2) {
-    animation: irisSway 6s ease-in-out infinite;
-    /* Adjusted fill color to match HRM primary color */
-    fill: #3B5998;
-}
-
-.sam-network-logo .central-eye circle:nth-child(3) {
-    animation: pupilDilate 4s ease-in-out infinite;
-    /* Adjusted fill color to a darker HRM shade */
-    fill: #1A2C5B;
-}
-
-.sam-network-logo .central-eye ellipse:last-child {
-    animation: highlight 3s ease-in-out infinite;
-}
-
-/* Hover effects */
-.sam-avatar:hover .sam-network-logo {
-    animation-duration: 2s;
-}
-
-.sam-avatar:hover .sam-network-logo .network-connections line {
-    stroke-width: 2;
-    opacity: 0.9;
-    animation-duration: 1s;
-}
-
-.sam-avatar:hover .sam-network-logo .network-nodes circle {
-    animation-duration: 1s;
-}
-
-.sam-avatar:hover .sam-network-logo .central-eye {
-    animation-duration: 1.5s;
-}
-
-/* Animation Keyframes */
-@keyframes logoFloat {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    25% { transform: translateY(-2px) rotate(1deg); }
-    50% { transform: translateY(0) rotate(0deg); }
-    75% { transform: translateY(-1px) rotate(-1deg); }
-}
-
-@keyframes networkPulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.8; }
-}
-
-@keyframes networkFlow {
-    0% {
-        stroke-dashoffset: 0;
-        opacity: 0.4;
-    }
-    50% {
-        stroke-dashoffset: 6;
-        opacity: 0.8;
-    }
-    100% {
-        stroke-dashoffset: 12;
-        opacity: 0.4;
-    }
-}
-
-@keyframes nodePulse {
-    0%, 100% {
-        transform: scale(1);
-        fill-opacity: 1;
-    }
-    50% {
-        transform: scale(1.2);
-        fill-opacity: 0.8;
-    }
-}
-
-@keyframes eyeFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-1px); }
-}
-
-@keyframes eyeBlink {
-    0%, 85%, 100% { transform: scaleY(1); }
-    90%, 95% { transform: scaleY(0.1); }
-}
-
-@keyframes irisSway {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-1px); }
-    75% { transform: translateX(1px); }
-}
-
-@keyframes pupilDilate {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(0.8); }
-}
-
-@keyframes highlight {
-    0%, 100% { opacity: 0.8; }
-    50% { opacity: 1; }
-}
-
-/* SAM Recording State */
-.assistant-button.recording .sam-eyes .eye {
-    animation: excitedBlink 0.5s infinite;
-}
-
-.assistant-button.recording .sam-mouth {
-    animation: talkingMouth 0.3s ease-in-out infinite;
-}
-
-@keyframes excitedBlink {
-    0%, 100% { transform: scaleY(1); }
-    50% { transform: scaleY(0.3); }
-}
-
-@keyframes talkingMouth {
-    0%, 100% {
-        border-radius: 0 0 16px 16px;
-        transform: scaleY(1);
-    }
-    50% {
-        border-radius: 8px;
-        transform: scaleY(0.7);
-    }
-}
-
-/* Voice Indicator */
-.voice-indicator {
-    position: absolute;
-    bottom: 90px;
-    right: 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 15px 20px;
-    border-radius: 25px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    min-width: 220px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-    /* Adjusted border color */
-    border: 2px solid rgba(59, 89, 152, 0.2);
-}
-
-.voice-indicator.active {
+@keyframes pulse-dot {
+  0%, 100% {
     opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.voice-text {
-    color: #2d3748;
-    font-weight: 600;
-    margin-bottom: 10px;
-    font-size: 0.9rem;
-}
-
-.voice-animation {
-    display: flex;
-    justify-content: center;
-    gap: 3px;
-}
-
-.wave {
-    width: 4px;
-    height: 20px;
-    /* Adjusted to match HRM primary color scheme */
-    background: linear-gradient(135deg, #3B5998 0%, #1A2C5B 100%);
-    border-radius: 2px;
-    animation: wave 1.2s ease-in-out infinite;
-}
-
-.wave:nth-child(2) {
-    animation-delay: 0.1s;
-}
-
-.wave:nth-child(3) {
-    animation-delay: 0.2s;
-}
-
-@keyframes wave {
-    0%, 100% { transform: scaleY(0.5); }
-    50% { transform: scaleY(1); }
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none; /* Allow clicks to pass through overlay */
-}
-
-.modal.active {
-    display: flex;
-    pointer-events: auto; /* Re-enable pointer events when active */
-}
-
-.modal-content {
-    background: white;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: modalSlideIn 0.3s ease;
-}
-
-/* Special styling for SAM chat modal to float with assistant button */
-.sam-chat-content {
-    position: absolute; /* Changed to absolute to be relative to its modal parent */
-    transition: all 0.3s ease-in-out;
-    width: 400px; /* Default width */
-    height: 600px; /* Default height */
-    display: flex;
-    flex-direction: column;
-    border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-}
-
-.sam-chat-content-bottom-right {
-    bottom: 30px; /* Same as assistant button bottom */
-    right: 30px; /* Same as assistant button right */
-    top: auto;
-    left: auto;
-}
-
-.sam-chat-content-top-left {
-    top: 30px;
-    left: 30px;
-    bottom: auto;
-    right: auto;
-}
-
-.sam-chat-content-top-right {
-    top: 30px;
-    right: 30px;
-    bottom: auto;
-    left: auto;
-}
-
-.sam-chat-content-bottom-left {
-    bottom: 30px;
-    left: 30px;
-    top: auto;
-    right: auto;
-}
-
-
-@keyframes modalSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-30px) scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-@keyframes slideInFromRight {
-    from {
-        opacity: 0;
-        transform: translateX(100%);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 30px;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.modal-header h3 {
-    color: #2d3748;
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-
-.close {
-    font-size: 1.5rem;
-    color: #718096;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-}
-
-.close:hover {
-    background: #f7fafc;
-    color: #2d3748;
-}
-
-.modal-body {
-    padding: 30px;
-}
-
-/* Forms */
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #2d3748;
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select { /* Added select */
-    width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #e2e8f0;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background: #f7fafc;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus { /* Added select */
-    outline: none;
-    /* Adjusted border focus color to HRM primary */
-    border-color: #3B5998;
-    background: white;
-    /* Adjusted box shadow to HRM primary */
-    box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.1);
-}
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #e2e8f0;
-}
-
-/* Buttons */
-.btn {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-}
-
-.btn-primary {
-    /* Adjusted to match HRM primary color scheme */
-    background: linear-gradient(135deg, #3B5998 0%, #1A2C5B 100%);
-    color: white;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    /* Adjusted shadow to match HRM style */
-    box-shadow: 0 8px 25px rgba(59, 89, 152, 0.4);
-}
-
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.9);
-    /* Adjusted border color to HRM primary */
-    color: #3B5998;
-    border: 2px solid #3B5998;
-}
-
-.btn-secondary:hover {
-    /* Adjusted background to HRM primary */
-    background: #3B5998;
-    color: white;
-    transform: translateY(-2px);
-}
-
-
-/* Loading Animation */
-.loading {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #f3f3f3;
-    /* Adjusted border-top color to HRM primary */
-    border-top: 2px solid #3B5998;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Drag and Drop Styles */
-.ai-assistant.dragging {
-    pointer-events: none;
-}
-
-.ai-assistant.dragging .assistant-button {
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
     transform: scale(1.2);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.8); /* Retained original shadow for visual feedback during drag */
+  }
 }
 
-/* Additional Animations */
-.fade-in {
-    animation: fadeIn 0.5s ease;
+.recording-text {
+  font-size: 13px;
+  color: #ccc;
+  font-style: italic;
+  min-height: 20px;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Chat Box */
+.sam-chatbox {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 380px;
+  height: 500px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 0.3s ease-out;
 }
 
-.slide-in-left {
-    animation: slideInLeft 0.3s ease;
-}
-
-@keyframes slideInLeft {
-    from { opacity: 0; transform: translateX(-20px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    /* Adjusted to match HRM primary color scheme */
-    background: linear-gradient(135deg, #3B5998 0%, #1A2C5B 100%);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    /* Adjusted to match HRM primary color scheme darker shade */
-    background: linear-gradient(135deg, #1A2C5B 0%, #3B5998 100%);
-}
-
-/* SAM Chat Interface Styles */
-/* These styles are applied to .modal-content which gets sam-chat-content class */
-/* Removed fixed width/height to make it more flexible for mobile */
-
-
-.sam-chat-header {
-    /* Adjusted to match HRM primary color scheme */
-    background: linear-gradient(135deg, #3B5998 0%, #1A2C5B 100%);
-    color: white;
-    border-radius: 15px 15px 0 0;
-    margin: 0;
-    padding: 15px 20px;
-}
-
-.sam-chat-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.sam-chat-title h3 {
-    color: white;
-    margin: 0;
-    font-size: 1.2rem;
-}
-
-.sam-mini-avatar {
-    width: 35px;
-    height: 35px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.sam-face-mini {
-    width: 25px;
-    height: 20px;
-    position: relative;
-}
-
-.sam-eyes-mini {
-    display: flex;
-    justify-content: space-between;
-    width: 15px;
-    margin: 0 auto 3px;
-}
-
-.eye-mini {
-    width: 4px;
-    height: 4px;
-    background: white;
-    border-radius: 50%;
-    animation: blink 4s infinite;
-}
-
-.sam-mouth-mini {
-    width: 8px;
-    height: 4px;
-    border: 1px solid white;
-    border-top: none;
-    border-radius: 0 0 8px 8px;
-    margin: 0 auto;
-}
-
-.sam-chat-body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    overflow: hidden;
-}
-
-.chat-messages {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    /* Adjusted background to lighter HRM shade */
-    background: #f8fafc;
-}
-
-.message {
-    display: flex;
-    flex-direction: column;
-    max-width: 80%;
-    animation: messageSlideIn 0.3s ease;
-}
-
-.user-message {
-    align-self: flex-end;
-    align-items: flex-end;
-}
-
-.sam-message {
-    align-self: flex-start;
-    align-items: flex-start;
-}
-
-.message-content {
-    padding: 12px 16px;
-    border-radius: 18px;
-    word-wrap: break-word;
-    line-height: 1.4;
-    font-size: 0.95rem;
-}
-
-.user-message .message-content {
-    /* Adjusted to match HRM primary color scheme */
-    background: linear-gradient(135deg, #3B5998 0%, #1A2C5B 100%);
-    color: white;
-    border-bottom-right-radius: 4px;
-}
-
-.sam-message .message-content {
-    background: white;
-    color: #2d3748;
-    border: 1px solid #e2e8f0;
-    border-bottom-left-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.sam-message .message-content ul {
-    margin: 10px 0;
-    padding-left: 20px;
-}
-
-.sam-message .message-content li {
-    margin-bottom: 5px;
-}
-
-.message-time {
-    font-size: 0.75rem;
-    color: #718096;
-    margin-top: 4px;
-    padding: 0 4px;
-}
-
-.chat-input-container {
-    padding: 15px 20px;
-    background: white;
-    border-top: 1px solid #e2e8f0;
-    border-radius: 0 0 15px 15px;
-}
-
-.chat-input-wrapper {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-#chatInput {
-    flex: 1;
-    padding: 12px 16px;
-    border: 2px solid #e2e8f0;
-    border-radius: 25px;
-    font-size: 0.95rem;
-    background: #f7fafc;
-    transition: all 0.3s ease;
-}
-
-#chatInput:focus {
-    outline: none;
-    /* Adjusted border focus color to HRM primary */
-    border-color: #3B5998;
-    background: white;
-    /* Adjusted box shadow to HRM primary */
-    box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.1);
-}
-
-.voice-btn, .send-btn {
-    width: 45px;
-    height: 45px;
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1.1rem;
-}
-
-.voice-btn {
-    background: #f7fafc;
-    /* Adjusted color and border to HRM primary */
-    color: #3B5998;
-    border: 2px solid #e2e8f0;
-}
-
-.voice-btn:hover {
-    /* Adjusted background to HRM primary */
-    background: #3B5998;
-    color: white;
-    transform: scale(1.05);
-}
-
-.voice-btn.recording {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-    color: white;
-    animation: pulse 1s infinite;
-}
-
-.send-btn {
-    /* Adjusted to match HRM primary color scheme */
-    background: linear-gradient(135deg, #3B5998 0%, #1A2C5B 100%);
-    color: white;
-}
-
-.send-btn:hover {
-    transform: scale(1.05);
-    /* Adjusted shadow to match HRM style */
-    box-shadow: 0 4px 15px rgba(59, 89, 152, 0.4);
-}
-
-@keyframes messageSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Mobile responsive adjustments for chat AND general modals */
-@media (max-width: 768px) {
-    /* For the overall modal container */
-    .modal {
-        padding: 0; /* Remove padding around the modal for full screen on small devices */
-        justify-content: center;
-        align-items: flex-end; /* Push content to bottom for chat-like experience */
-    }
-
-    /* Adjust samChatModal specifically to fill screen and come from bottom */
-    #samChatModal.active {
-        justify-content: center; /* Center horizontally in mobile */
-        align-items: flex-end; /* Stick to the bottom */
-    }
-
-    .modal-content,
-    .sam-chat-content { /* Both general modals and chat modal content */
-        width: 100%; /* Full width */
-        height: 90vh; /* Take up most of the viewport height */
-        max-width: none; /* Override max-width */
-        max-height: none; /* Override max-height */
-        border-radius: 20px 20px 0 0; /* Rounded top corners only */
-        animation: slideInFromBottom 0.3s ease-out; /* Slide in from bottom */
-    }
-
-    .modal-header {
-        border-radius: 20px 20px 0 0;
-    }
-
-    .chat-input-container {
-        border-radius: 0 0 20px 20px;
-    }
-
-    .chat-messages {
-        padding: 15px;
-    }
-
-    .message {
-        max-width: 90%;
-    }
-
-    .message-content {
-        font-size: 0.9rem;
-        padding: 10px 14px;
-    }
-
-    .chat-input-wrapper {
-        gap: 8px;
-    }
-
-    .voice-btn, .send-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-
-    /* Hide voice indicator on small screens if you want, or reposition */
-    .voice-indicator {
-        display: none; /* Hide on small screens to reduce clutter */
-    }
-
-    /* Ensure fixed assistant button doesn't obscure chat on mobile */
-    .ai-assistant {
-        /* On small screens, keep it in bottom-right by default, or you can hide it */
-        bottom: 10px;
-        right: 10px;
-        width: 60px; /* Smaller button */
-        height: 60px;
-        z-index: 1001; /* Ensure it's above chat overlay */
-    }
-
-    .assistant-button {
-        width: 60px;
-        height: 60px;
-    }
-    .sam-avatar {
-        width: 45px;
-        height: 45px;
-    }
-
-    /* Adjust chat modal positioning for mobile as it now takes full width */
-    .sam-chat-content.sam-chat-content-bottom-right,
-    .sam-chat-content.sam-chat-content-top-left,
-    .sam-chat-content.sam-chat-content-top-right,
-    .sam-chat-content.sam-chat-content-bottom-left {
-        /* Reset positioning for mobile to allow it to be handled by modal parent */
-        top: auto;
-        left: auto;
-        right: auto;
-        bottom: 0; /* Always stick to the bottom */
-    }
-}
-
-/* New animation for mobile slide-in */
-@keyframes slideInFromBottom {
-    from {
-        opacity: 0;
-        transform: translateY(100%);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-/* Dark mode specific styles for SAM modals */
-.dark-mode-modal .modal-content {
-  background: #2C2C2C;
-  color: #E0E0E0;
-}
-
-.dark-mode-modal .modal-header {
-  background: #1A1A1A;
-  border-bottom-color: #3A3A3A;
-}
-
-.dark-mode-modal .modal-header h3 {
-  color: #E0E0E0;
-}
-
-.dark-mode-modal .close {
-  color: #808080;
-}
-
-.dark-mode-modal .close:hover {
-  background: #3A3A3A;
-  color: #E0E0E0;
-}
-
-.dark-mode-modal .form-group label {
-  color: #E0E0E0;
-}
-
-.dark-mode-modal .form-group input,
-.dark-mode-modal .form-group textarea,
-.dark-mode-modal .form-group select {
-  background: #1A1A1A;
-  border-color: #3A3A3A;
-  color: #E0E0E0;
-}
-
-.dark-mode-modal .form-group input:focus,
-.dark-mode-modal .form-group textarea:focus,
-.dark-mode-modal .form-group select:focus {
-  /* Adjusted highlight color for dark mode to HRM primary */
-  border-color: #3B5998;
-  box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.2);
-}
-
-.dark-mode-modal .form-actions {
-  border-top-color: #3A3A3A;
-}
-
-.dark-mode-chat-modal .sam-chat-content {
-  background: #2C2C2C;
-}
-
-.dark-mode-chat-modal .chat-messages {
-  background: #1A1A1A;
-}
-
-.dark-mode-chat-modal .sam-message .message-content {
-  background: #3A3A3A;
-  color: #E0E0E0;
-  border-color: #4A4A4A;
-}
-
-.dark-mode-chat-modal .chat-input-container {
-  background: #2C2C2C;
-  border-top-color: #3A3A3A;
-}
-
-.dark-mode-chat-modal #chatInput {
-  background: #1A1A1A;
-  border-color: #3A3A3A;
-  color: #E0E0E0;
-}
-
-.dark-mode-chat-modal #chatInput:focus {
-  /* Adjusted highlight color for dark mode to HRM primary */
-  border-color: #3B5998;
-  box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.2);
-}
-
-.dark-mode-chat-modal .voice-btn {
-  background: #3A3A3A;
-  /* Adjusted color to HRM primary */
-  color: #3B5998;
-  border-color: #4A4A4A;
-}
-
-.dark-mode-chat-modal .voice-btn:hover {
-  /* Adjusted background to HRM primary */
-  background: #3B5998;
+.sam-chatbox.dark {
+  background: #2a2a2a;
   color: white;
 }
 
-.dark-mode-chat-modal .voice-btn.recording {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); /* Retain recording colors */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Base styles for the CRM app also need to be accessible */
-body.dark-mode {
-    background: #1A1A1A;
-    color: #E0E0E0;
+/* Chat Header */
+.chat-header {
+  background: linear-gradient(135deg, #3B5998 0%, #1e40af 100%);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
 }
 
-body.dark-mode .crm-header,
-body.dark-mode .crm-main {
-    background: rgba(26, 26, 26, 0.95); /* Darker background with transparency */
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); /* Darker shadow */
+.chat-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-body.dark-mode .crm-header h1,
-body.dark-mode .crm-main h2 {
-    color: #E0E0E0;
+.sam-avatar {
+  width: 36px;
+  height: 24px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-body.dark-mode .btn-secondary {
-    background: #3A3A3A;
-    color: #E0E0E0;
-    /* Adjusted border-color to HRM primary */
-    border-color: #3B5998;
+.sam-avatar .sam-eye {
+  width: 6px;
+  height: 6px;
+  background: white;
 }
 
-body.dark-mode .btn-secondary:hover {
-    /* Adjusted background to HRM primary */
-    background: #3B5998;
-    color: white;
+.sam-avatar .left-eye {
+  left: 8px;
 }
 
-body.dark-mode .contact-card,
-body.dark-mode .meeting-card {
-    background: #2C2C2C;
-    border-color: #3A3A3A;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+.sam-avatar .right-eye {
+  right: 8px;
 }
 
-body.dark-mode .contact-info h3,
-body.dark-mode .meeting-title {
-    color: #E0E0E0;
+.chat-title h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
 }
 
-body.dark-mode .contact-info p,
-body.dark-mode .contact-details div,
-body.dark-mode .meeting-participants,
-body.dark-mode .meeting-description {
-    color: #A0A0A0;
+.status {
+  font-size: 12px;
+  opacity: 0.8;
 }
 
-body.dark-mode .section-header {
-    border-bottom-color: #3A3A3A;
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  transition: background 0.2s;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Chat Messages */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.message {
+  display: flex;
+  max-width: 85%;
+}
+
+.message.user {
+  align-self: flex-end;
+}
+
+.message.sam {
+  align-self: flex-start;
+}
+
+.message-content {
+  background: #f1f3f4;
+  padding: 12px 16px;
+  border-radius: 18px;
+  position: relative;
+}
+
+.message.user .message-content {
+  background: linear-gradient(135deg, #3B5998 0%, #1e40af 100%);
+  color: white;
+}
+
+.sam-chatbox.dark .message.sam .message-content {
+  background: #3a3a3a;
+  color: white;
+}
+
+.message-content p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.timestamp {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Chat Input */
+.chat-input {
+  padding: 15px 20px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.sam-chatbox.dark .chat-input {
+  border-top: 1px solid #444;
+}
+
+.message-input {
+  flex: 1;
+  border: 1px solid #e0e0e0;
+  border-radius: 25px;
+  padding: 10px 15px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.message-input:focus {
+  border-color: #3B5998;
+}
+
+.sam-chatbox.dark .message-input {
+  background: #3a3a3a;
+  border: 1px solid #555;
+  color: white;
+}
+
+.sam-chatbox.dark .message-input::placeholder {
+  color: #aaa;
+}
+
+.send-btn {
+  background: linear-gradient(135deg, #3B5998 0%, #1e40af 100%);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.2s;
+}
+
+.send-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Quick Actions */
+.quick-actions {
+  padding: 10px 20px 15px;
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.sam-chatbox.dark .quick-actions {
+  border-top: 1px solid #444;
+}
+
+.quick-action {
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 15px;
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+  color: #555;
+}
+
+.quick-action:hover {
+  background: #3B5998;
+  color: white;
+  border-color: #3B5998;
+}
+
+.sam-chatbox.dark .quick-action {
+  background: #3a3a3a;
+  border: 1px solid #555;
+  color: #ccc;
+}
+
+.sam-chatbox.dark .quick-action:hover {
+  background: #3B5998;
+  color: white;
+  border-color: #3B5998;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .sam-chatbox {
+    width: calc(100vw - 40px);
+    height: 70vh;
+    bottom: 90px;
+    right: 20px;
+  }
+  
+  .recording-status {
+    width: calc(100vw - 100px);
+    right: 20px;
+  }
+}
+
+/* Custom Scrollbar */
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
